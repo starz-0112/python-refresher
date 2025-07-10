@@ -29,7 +29,7 @@ class Bank(object):
         if isinstance(withdraw_amt, int) or isinstance(withdraw_amt, float):
             # Second check: is this amt affordable?
             if withdraw_amt > self.balance or withdraw_amt < 0:
-                print("Sorry! You cannot withdraw " + str(withdraw_amt) + " dollars. Your account does not have that much money!")
+                print("Sorry! You cannot withdraw " + str(withdraw_amt) + " dollars.")
                 return False
             else:
                 self.balance -= withdraw_amt

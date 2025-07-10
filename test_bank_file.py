@@ -51,8 +51,16 @@ class TestBank(unittest.TestCase):
     def test_bank_printing(self):
         """Hard test the printing balance statement part."""
         a_Bank = bank_file.Bank(500, "Nemo", 1011235)
-        self.assertEqual(a_Bank.balance, 500)       #check pre-balance, make sure it's still the right account
+        self.assertEqual(a_Bank.balance, 500)       #check balance, make sure it's still the right account
         self.assertNotEqual(a_Bank.balance, 20)
         self.assertEqual(type(a_Bank.print_current_balance()), int)     #check correct typing is printed and goes through
         self.assertNotEqual(type(a_Bank.print_current_balance()), str)      #remember, you put return balance value, not the printed str
+        self.assertNotEqual(a_Bank.print_current_balance(), False)
+        a_Bank.deposit(400)
+        self.assertEqual(a_Bank.print_current_balance(), 900)       #check that print_current_balance() updates properly after deposit
+        self.assertNotEqual(a_Bank.print_current_balance(), 910)
+        a_Bank.withdraw(60)
+        self.assertEqual(a_Bank.print_current_balance(), 840)       #check that print_current_balance() updates properly after withdraw
+        self.assertNotEqual(a_Bank.print_current_balance(), 340)        #the balance that would show if Bank skips previous deposit step
+        self.assertEqual(type(a_Bank.print_current_balance()), int)     #once again, checking proper type of output
         self.assertNotEqual(a_Bank.print_current_balance(), False)
