@@ -21,7 +21,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(a_Bank.name, "Nemo")       #check bank name
         self.assertEqual(a_Bank.account_num, 1011235)       #check bank account num
         self.assertNotEqual(a_Bank.account_num, 4)
-        self.assertNotEqual(type(a_Bank.account_num), str)      #check type of bank account num
+        self.assertNotIsInstance(a_Bank.account_num, str)      #check type of bank account num
     def test_bank_withdraw(self):
         """Hard test the withdrawing feature of the class. Make sure it's not modifying any other number. Make sure it does not let users withdraw too much or withdraw negative money."""
         a_Bank = bank_file.Bank(500, "Nemo", 1011235)
@@ -35,6 +35,7 @@ class TestBank(unittest.TestCase):
         self.assertEqual(a_Bank.withdraw(900), False)       #check withdrawing too much is not allowed
         self.assertEqual(a_Bank.withdraw(-80), False)       #check withdrawing negative is not allowed
         self.assertNotEqual(a_Bank.withdraw(0), False)        #withdrawing 0 should be allowed
+        self.assertNotEqual(a_Bank.withdraw(400), False)        #withdrawing everything should be allowed
     def test_bank_deposit(self):
         """Hard test the deposit feature of the class. Make sure it does not accept negatives."""
         a_Bank = bank_file.Bank(500, "Nemo", 1011235)
@@ -53,8 +54,8 @@ class TestBank(unittest.TestCase):
         a_Bank = bank_file.Bank(500, "Nemo", 1011235)
         self.assertEqual(a_Bank.balance, 500)       #check balance, make sure it's still the right account
         self.assertNotEqual(a_Bank.balance, 20)
-        self.assertEqual(type(a_Bank.print_current_balance()), int)     #check correct typing is printed and goes through
-        self.assertNotEqual(type(a_Bank.print_current_balance()), str)      #remember, you put return balance value, not the printed str
+        self.assertIsInstance(a_Bank.print_current_balance(), int)     #check correct typing is printed and goes through
+        self.assertNotIsInstance(a_Bank.print_current_balance(), str)      #remember, you put return balance value, not the printed str
         self.assertNotEqual(a_Bank.print_current_balance(), False)
         a_Bank.deposit(400)
         self.assertEqual(a_Bank.print_current_balance(), 900)       #check that print_current_balance() updates properly after deposit
@@ -62,5 +63,5 @@ class TestBank(unittest.TestCase):
         a_Bank.withdraw(60)
         self.assertEqual(a_Bank.print_current_balance(), 840)       #check that print_current_balance() updates properly after withdraw
         self.assertNotEqual(a_Bank.print_current_balance(), 340)        #the balance that would show if Bank skips previous deposit step
-        self.assertEqual(type(a_Bank.print_current_balance()), int)     #once again, checking proper type of output
+        self.assertIsInstance(a_Bank.print_current_balance(), int)     #once again, checking proper type of output
         self.assertNotEqual(a_Bank.print_current_balance(), False)
